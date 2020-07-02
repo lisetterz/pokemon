@@ -1,6 +1,7 @@
 package com.brightcove.pokemon;
 
 import com.brightcove.pokemon.config.RestTemplateConfig;
+import com.brightcove.pokemon.domain.dto.Pokemon;
 import com.brightcove.pokemon.services.APIService;
 import com.brightcove.pokemon.services.APIServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,11 @@ class PokemonApplicationTests {
 
 	@Test
 	void contextLoads() {
-		apiService.getPokemon("ditto");
 	}
 
+	@Test
+	void getPokemonTest(){
+		Pokemon pokemon = apiService.getPokemon("ditto");
+		System.out.println(pokemon.getName());
+	}
 }
