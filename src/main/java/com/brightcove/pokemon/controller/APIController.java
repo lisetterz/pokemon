@@ -2,6 +2,7 @@ package com.brightcove.pokemon.controller;
 
 import com.brightcove.pokemon.components.APIComponent;
 import com.brightcove.pokemon.domain.dto.ResponseWrapper;
+import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import com.brightcove.pokemon.domain.dto.pokemon.PokemonWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,20 +30,24 @@ public class APIController {
         return component.getType(name);
     }
     @GetMapping("move/{name}")
-    public String getMoves(@PathVariable String name){
+    public String getMove(@PathVariable String name){
         return component.getMove(name);
     }
-    /*
+    @GetMapping("moves/{name}")
+    public String getMoves(@PathVariable String name){
+        return component.getMoves(name);
+    }
+
     @GetMapping("doubleDamage/{pokemon1}-{pokemon2}")
     public String getDoubleDamage(@PathVariable String pokemon1, @PathVariable String pokemon2){
         return component.doubleDamage(pokemon1,pokemon2);
     }
-    /*
+
     @GetMapping("halfOrNoDamage/{pokemon1}-{pokemon2}")
     public String getHalfOrNoDamage(@PathVariable String pokemon1, @PathVariable String pokemon2){
         return component.halfOrNoDamage(pokemon1,pokemon2);
     }
-    */
+
     @PostMapping(
             value = "/createPokemon", consumes = "application/json", produces = "application/json")
     public ResponseWrapper createPokemon(@RequestBody PokemonWrapper pokemonWrapper) {
