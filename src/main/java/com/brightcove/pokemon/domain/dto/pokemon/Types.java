@@ -1,4 +1,4 @@
-package com.brightcove.pokemon.domain.dto;
+package com.brightcove.pokemon.domain.dto.pokemon;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

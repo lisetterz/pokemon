@@ -1,16 +1,18 @@
 package com.brightcove.pokemon.components;
 
-import com.brightcove.pokemon.domain.dto.Pokemon;
+import com.brightcove.pokemon.domain.dto.pokemon.Move;
+import com.brightcove.pokemon.domain.dto.pokemon.Moves;
+import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import com.brightcove.pokemon.domain.dto.Type;
-import com.brightcove.pokemon.domain.dto.Types;
+import com.brightcove.pokemon.domain.dto.pokemon.Types;
 import com.brightcove.pokemon.domain.dto.damageRelations.DoubleDamageTo;
+import com.brightcove.pokemon.domain.dto.damageRelations.HalfDamageForm;
+import com.brightcove.pokemon.domain.dto.damageRelations.NoDamageFrom;
 import com.brightcove.pokemon.services.APIServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.*;
 
 @Component
 public class APIComponent {
@@ -37,25 +39,25 @@ public class APIComponent {
         return service.getType(name).toString();
     }
 
-    public Type pokemonToTypeObj(String name){
+    private Type pokemonToTypeObj(String name){
         Pokemon pokemon = service.getPokemon(name);
         Types[] types= pokemon.getTypes();
         String type_name = types[0].getType().getName();
         Type type = service.getType(type_name);
         return type;
     }
-    public Types[] pokemonTypes(String name){
+    private Types[] pokemonTypes(String name){
         return service.getPokemon(name).getTypes();
     }
 
     public String doubleDamage(String name1, String name2){
 
         Type pokemon1_type = pokemonToTypeObj(name1);
-      //  Type type2 = pokemonToTypeObj(name2);
+       // Type type2 = pokemonToTypeObj(name2);
         Types[] pokemon1_types = pokemonTypes(name1);
         Types[] pokemon2_type = pokemonTypes(name2);
        DoubleDamageTo[] pokemon1_dblDmgTo = pokemon1_type.getDamage_relations().getDouble_damage_to();
-        String pokemon1Type= pokemon1_types[0].getType().getName();
+       String pokemon1Type= pokemon1_types[0].getType().getName();
         String pokemon2Type = pokemon2_type[0].getType().getName();
 
        for(int i = 0; i<pokemon1_dblDmgTo.length;i++) {
@@ -74,11 +76,84 @@ public class APIComponent {
            }
 
        }
-           return "No, pokemon "+name1+" of type "+
+          return "No, pokemon "+name1+" of type "+
                 pokemon1Type+ " doesn't deals double damage to pokemon "+
                 name2+" of type "+
                 pokemon2Type;
     }
 
+    public Object[] compareArrays(Object[] array1, Object[] array2){
 
+        for (int i=0; i<array1.length;i++){
+            for(int j=0; j<array2.length;j++){
+             //   if((array1.getName())
+            }
+        }
+        return null;
+    }
+    public String halfOrNoDamage(String name1, String name2){
+    //   String positive =name1+" receives half or no damage from "+name2;
+     //  String negative = name1+" doesn't receive half or no damage from "+name2;
+        Type pokemon1_type = pokemonToTypeObj(name1);
+
+        Types[] pokemon2_type = pokemonTypes(name2);
+        HalfDamageForm[] pokemon1_halfDmgFrom = pokemon1_type.getDamage_relations().getHalf_damage_from();
+        NoDamageFrom[] pokemon1_noDmgFrom = pokemon1_type.getDamage_relations().getNo_damage_from();
+        for(int i = 0; i<pokemon1_halfDmgFrom.length;i++) {
+            for(int j=0; j<pokemon2_type.length;j++){
+                //   System.out.println("yes, "+pokemon1Type+ " deals double damage to "+ pokemon2Type);
+
+                if (pokemon1_halfDmgFrom[i].getName().equals(pokemon2_type[j].getType().getName())) {
+
+                    return name1+" receives half damage from "+name2;
+                }
+            }
+
+        }
+        for(int i = 0; i<pokemon1_noDmgFrom.length;i++) {
+            for(int j=0; j<pokemon2_type.length;j++){
+                //   System.out.println("yes, "+pokemon1Type+ " deals double damage to "+ pokemon2Type);
+
+                if (pokemon1_noDmgFrom[i].getName().equals(pokemon2_type[j].getType().getName())) {
+
+                    return name1+" receives no damage from "+name2;
+                }
+            }
+
+        }
+        return name1+" doesn't receive half or no damage from "+name2;
+    }
+/*
+public String sameMoves(String[] pokemons){
+        Pokemon pokemon;
+        Moves[] moves;
+  //  HashMap<Moves> sameMoves = new HashMap<>();
+        for(int i=0; i<pokemons.length;i++){
+            pokemon = service.getPokemon(pokemons[i]);
+            moves = pokemon.getMoves();
+            for(int j = i ;i<moves.length;j++){
+
+            }
+        }
+return "";
+}
+*/
+/*
+    public String sameMoves(String[] pokemons) {
+          int size = pokemons.length;
+          String [][] matrix= new String[size][];
+         // HashMap<Pokemon,Hashtable<Moves, Move>> hm = new HashMap<>();
+          HashMap<Pokemon, Moves[]> myMoves = new HashMap<>();
+        for(int i=0; i<size;i++){
+           Pokemon pokemon = service.getPokemon(pokemons[i]);
+           Moves[] moves = pokemon.getMoves();
+           for(int j=0; j<moves.length;j++){
+               myMoves.put(pokemon,moves);
+           }
+        }
+
+        return myMoves.toString();
+    }
+
+ */
 }

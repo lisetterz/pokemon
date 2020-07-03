@@ -1,7 +1,7 @@
 package com.brightcove.pokemon.services;
 
 import com.brightcove.pokemon.config.RestTemplateConfig;
-import com.brightcove.pokemon.domain.dto.Pokemon;
+import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import com.brightcove.pokemon.domain.dto.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;

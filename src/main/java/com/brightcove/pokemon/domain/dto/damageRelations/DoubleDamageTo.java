@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DoubleDamageTo {
+public class DoubleDamageTo{
         private String name;
         private String url;
 }

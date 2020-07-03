@@ -1,6 +1,6 @@
 package com.brightcove.pokemon;
 
-import com.brightcove.pokemon.domain.dto.Pokemon;
+import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import com.brightcove.pokemon.domain.dto.Type;
 import com.brightcove.pokemon.services.APIService;
 import org.junit.jupiter.api.Test;

@@ -32,4 +32,9 @@ public class APIController {
     public String getDoubleDamage(@PathVariable String pokemon1, @PathVariable String pokemon2){
         return component.doubleDamage(pokemon1,pokemon2);
     }
+    @GetMapping("halfOrNoDamage/{pokemon1}-{pokemon2}")
+    public String getHalfOrNoDamage(@PathVariable String pokemon1, @PathVariable String pokemon2){
+        return component.halfOrNoDamage(pokemon1,pokemon2);
+    }
+
 }
