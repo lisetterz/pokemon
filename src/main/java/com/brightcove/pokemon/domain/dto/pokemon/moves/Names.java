@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Names {
-    private List<Name> name;
+    private Name name;
+    private Language language;
 
 }

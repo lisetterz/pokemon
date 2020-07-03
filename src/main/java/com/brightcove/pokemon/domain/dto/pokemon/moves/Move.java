@@ -9,5 +9,5 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Move {
     private String name;
-    private Names[][] names;
+    private List<Names> names;
 }

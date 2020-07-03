@@ -173,8 +173,10 @@ public void getMoves(){
 public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
    ResponseWrapper wrapper = new ResponseWrapper();
     List<ResponseDTO> list = new ArrayList<>();
-  // List<Pokemon> pokemonList = new ArrayList<>();
+   List<Pokemon> pokemonList = new ArrayList<>();
    for(Pokemon pokemon : pokemonWrapper.getPokemons()){
+       pokemonList.add(pokemon);
+
        ResponseDTO response = addPokemon(pokemon);
        list.add(response);
    }
