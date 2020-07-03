@@ -2,6 +2,7 @@ package com.brightcove.pokemon.services;
 
 import com.brightcove.pokemon.config.RestTemplateConfig;
 import com.brightcove.pokemon.domain.dto.Pokemon;
+import com.brightcove.pokemon.domain.dto.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,13 @@ public class APIServiceImpl implements APIService{
       ResponseEntity<Pokemon> response = client.exchange("https://pokeapi.co/api/v2/pokemon/" + name, HttpMethod.GET,config.createHeaders(),Pokemon.class);
         return response.getBody();
 
+    }
+
+    @Override
+    public Type getType(String name) {
+        RestTemplate client = config.createRestTemplate();
+
+        ResponseEntity<Type> response = client.exchange("https://pokeapi.co/api/v2/type/" + name, HttpMethod.GET,config.createHeaders(),Type.class);
+        return response.getBody();
     }
 }
