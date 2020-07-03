@@ -1,23 +1,21 @@
 package com.brightcove.pokemon.domain.dto;
 
-import com.brightcove.pokemon.domain.dto.pokemon.Moves;
-
 import java.util.List;
 
 public class ResponseWrapper {
-    private List<MovesResponse> response;
+    private List<ResponseDTO> response;
 
     /**
      * @return the persons
      */
-    public List<MovesResponse> getResponse() {
+    public List<ResponseDTO> getResponse() {
         return response;
     }
 
     /**
      * @param response the pokemons to set
      */
-    public void setResponse(List<MovesResponse> response) {
+    public void setResponse(List<ResponseDTO> response) {
         this.response = response;
     }
 }

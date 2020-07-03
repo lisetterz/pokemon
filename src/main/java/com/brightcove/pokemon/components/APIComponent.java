@@ -1,12 +1,9 @@
 package com.brightcove.pokemon.components;
 
-import com.brightcove.pokemon.domain.dto.MovesResponse;
+import com.brightcove.pokemon.domain.dto.ResponseDTO;
 import com.brightcove.pokemon.domain.dto.ResponseWrapper;
 import com.brightcove.pokemon.domain.dto.pokemon.*;
-import com.brightcove.pokemon.domain.dto.Type;
-import com.brightcove.pokemon.domain.dto.damageRelations.DoubleDamageTo;
-import com.brightcove.pokemon.domain.dto.damageRelations.HalfDamageForm;
-import com.brightcove.pokemon.domain.dto.damageRelations.NoDamageFrom;
+import com.brightcove.pokemon.domain.dto.pokemon.moves.Moves;
 import com.brightcove.pokemon.services.APIServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +34,8 @@ public class APIComponent {
     public String getType(String name){
         return service.getType(name).toString();
     }
+
+    public String getMove(String name){ return service.getMove(name).toString();}
 /*
     private Type pokemonToTypeObj(String name){
         Pokemon pokemon = service.getPokemon(name);
@@ -162,25 +161,39 @@ public List<Moves> moves(PokemonWrapper pokemonWrapper){
   // List<Moves> moves = poke.getMoves();
     return poke.getMoves();
 }
-public MovesResponse addPokemon(Pokemon pokemon){
-    MovesResponse response = new MovesResponse();
+public ResponseDTO addPokemon(Pokemon pokemon){
+    ResponseDTO response = new ResponseDTO();
     response.setName(pokemon.getName());
     response.setMessage("saved");
     return response;
 }
-public ResponseWrapper savePokemon (PokemonWrapper pokemonWrapper) {
+public void getMoves(){
+
+}
+public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
    ResponseWrapper wrapper = new ResponseWrapper();
-    List<MovesResponse> list = new ArrayList<>();
+    List<ResponseDTO> list = new ArrayList<>();
   // List<Pokemon> pokemonList = new ArrayList<>();
    for(Pokemon pokemon : pokemonWrapper.getPokemons()){
-       MovesResponse response = addPokemon(pokemon);
+       ResponseDTO response = addPokemon(pokemon);
        list.add(response);
    }
 
    wrapper.setResponse(list);
     return wrapper;
 }
-
+/*
+    public ResponseWrapper pokemonMoves(Pokemon pokemon) {
+        ResponseWrapper wrapper = new ResponseWrapper();
+        List<MovesResponse> list = new ArrayList<>();
+            MovesResponse response = addPokemon(pokemon);
+            response.setName(pokemon.getName());
+            response.setMoves(pokemon.getMoves());
+            list.add(response);
+        wrapper.setResponse(list);
+        return wrapper;
+    }
+*/
 /*public ResponseWrapper savePokemon (Pokemon pokemon) {
    ResponseWrapper wrapper = new ResponseWrapper();
    MovesResponse response = new MovesResponse();
