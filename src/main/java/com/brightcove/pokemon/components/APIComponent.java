@@ -1,10 +1,9 @@
 package com.brightcove.pokemon.components;
 
-import com.brightcove.pokemon.domain.dto.pokemon.Move;
-import com.brightcove.pokemon.domain.dto.pokemon.Moves;
-import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
+import com.brightcove.pokemon.domain.dto.MovesResponse;
+import com.brightcove.pokemon.domain.dto.ResponseWrapper;
+import com.brightcove.pokemon.domain.dto.pokemon.*;
 import com.brightcove.pokemon.domain.dto.Type;
-import com.brightcove.pokemon.domain.dto.pokemon.Types;
 import com.brightcove.pokemon.domain.dto.damageRelations.DoubleDamageTo;
 import com.brightcove.pokemon.domain.dto.damageRelations.HalfDamageForm;
 import com.brightcove.pokemon.domain.dto.damageRelations.NoDamageFrom;
@@ -38,7 +37,7 @@ public class APIComponent {
     public String getType(String name){
         return service.getType(name).toString();
     }
-
+/*
     private Type pokemonToTypeObj(String name){
         Pokemon pokemon = service.getPokemon(name);
         Types[] types= pokemon.getTypes();
@@ -49,7 +48,7 @@ public class APIComponent {
     private Types[] pokemonTypes(String name){
         return service.getPokemon(name).getTypes();
     }
-
+/*
     public String doubleDamage(String name1, String name2){
 
         Type pokemon1_type = pokemonToTypeObj(name1);
@@ -91,6 +90,7 @@ public class APIComponent {
         }
         return null;
     }
+    /*
     public String halfOrNoDamage(String name1, String name2){
     //   String positive =name1+" receives half or no damage from "+name2;
      //  String negative = name1+" doesn't receive half or no damage from "+name2;
@@ -156,4 +156,41 @@ return "";
     }
 
  */
+public List<Moves> moves(PokemonWrapper pokemonWrapper){
+    List<Pokemon> pokemons = pokemonWrapper.getPokemons();
+   Pokemon poke = pokemons.get(0);
+  // List<Moves> moves = poke.getMoves();
+    return poke.getMoves();
+}
+public MovesResponse addPokemon(Pokemon pokemon){
+    MovesResponse response = new MovesResponse();
+    response.setName(pokemon.getName());
+    response.setMessage("saved");
+    return response;
+}
+public ResponseWrapper savePokemon (PokemonWrapper pokemonWrapper) {
+   ResponseWrapper wrapper = new ResponseWrapper();
+    List<MovesResponse> list = new ArrayList<>();
+  // List<Pokemon> pokemonList = new ArrayList<>();
+   for(Pokemon pokemon : pokemonWrapper.getPokemons()){
+       MovesResponse response = addPokemon(pokemon);
+       list.add(response);
+   }
+
+   wrapper.setResponse(list);
+    return wrapper;
+}
+
+/*public ResponseWrapper savePokemon (Pokemon pokemon) {
+   ResponseWrapper wrapper = new ResponseWrapper();
+   MovesResponse response = new MovesResponse();
+   response.setName(pokemon.getName());
+   response.setMessage("saved");
+   List<MovesResponse> list = new ArrayList<>();
+    list.add(response);
+   wrapper.setResponse(list);
+   response.setName("charmander");
+   list.add(response);
+    return wrapper;
+}*/
 }
