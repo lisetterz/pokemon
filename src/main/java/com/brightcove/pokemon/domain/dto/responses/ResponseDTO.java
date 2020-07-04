@@ -1,6 +1,6 @@
-package com.brightcove.pokemon.domain.dto;
+package com.brightcove.pokemon.domain.dto.responses;
 
-import com.brightcove.pokemon.domain.dto.pokemon.moves.Moves;
+import com.brightcove.pokemon.domain.dto.moves.Moves;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

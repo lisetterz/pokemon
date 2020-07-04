@@ -1,4 +1,4 @@
-package com.brightcove.pokemon.domain.dto;
+package com.brightcove.pokemon.domain.dto.responses;
 
 import java.util.List;
 

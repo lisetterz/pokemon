@@ -1,4 +1,4 @@
-package com.brightcove.pokemon.domain.dto.pokemon.moves;
+package com.brightcove.pokemon.domain.dto.moves;
 
 import java.util.List;
 

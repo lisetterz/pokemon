@@ -1,4 +1,4 @@
-package com.brightcove.pokemon.domain.dto.pokemon.moves;
+package com.brightcove.pokemon.domain.dto.moves;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Names {
-    private Name name;
-    private Language language;
-
+public class Moves {
+    private String name;
+    private List<Names> names;
+    private Move move;
 }

@@ -1,10 +1,11 @@
-package com.brightcove.pokemon.domain.dto.pokemon.moves;
+package com.brightcove.pokemon.domain.dto.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Moves {
-    private Move move;
+public class DoubleDamageTo{
+        private String name;
+        private String url;
 }

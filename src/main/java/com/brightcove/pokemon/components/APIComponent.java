@@ -1,13 +1,11 @@
 package com.brightcove.pokemon.components;
 
-import com.brightcove.pokemon.domain.dto.ResponseDTO;
-import com.brightcove.pokemon.domain.dto.ResponseWrapper;
-import com.brightcove.pokemon.domain.dto.Type;
-import com.brightcove.pokemon.domain.dto.damageRelations.DoubleDamageTo;
-import com.brightcove.pokemon.domain.dto.damageRelations.HalfDamageForm;
-import com.brightcove.pokemon.domain.dto.damageRelations.NoDamageFrom;
+import com.brightcove.pokemon.domain.dto.responses.ResponseWrapper;
+import com.brightcove.pokemon.domain.dto.Type.Type;
+import com.brightcove.pokemon.domain.dto.Type.DoubleDamageTo;
+import com.brightcove.pokemon.domain.dto.Type.HalfDamageForm;
+import com.brightcove.pokemon.domain.dto.Type.NoDamageFrom;
 import com.brightcove.pokemon.domain.dto.pokemon.*;
-import com.brightcove.pokemon.domain.dto.pokemon.moves.Moves;
 import com.brightcove.pokemon.services.APIServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,19 +16,7 @@ import java.util.*;
 public class APIComponent {
     @Autowired
     APIServiceImpl service;
-/*
-    public String dealDoubleDamage(String pokemon1, String pokemon2){
-        Type type1 =service.getType(pokemon1);
-        Type type2 =service.getType(pokemon2);
-        DoubleDamageTo[] doubleDamageTo = type1.getDamage_relations().getDouble_damage_to();
-        for(DoubleDamageTo current: doubleDamageTo ){
-            if(current.getName().equals(type1.getName())){
-                return "yes";
-            }
-        }
-        return "no";
-    }
-*/
+
     public String getPokemon(String name){
         return service.getPokemon(name).toString();
     }
@@ -40,9 +26,13 @@ public class APIComponent {
     }
 
     public String getMove(String name){ return service.getMove(name).toString();}
-    public String getMoves(String name){
 
-        return service.getPokemon(name).getMoves().toString();}
+    /*//mejor no utilizar
+
+     *//*
+    public String getMoves(String pokemonName){
+
+        return service.getPokemon(pokemonName).getMoves().toString();}
 /*
     private Type pokemonToTypeObj(String name){
         Pokemon pokemon = service.getPokemon(name);
@@ -121,8 +111,17 @@ public String doubleDamage(String name1, String name2){
 
         return name1+" doesn't receive half or no damage from "+name2;
     }
-/*
 
+
+//returns result wrapped
+    public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
+    ResponseWrapper responseWrapper = new ResponseWrapper();
+    return responseWrapper;
+    }
+    /*
+*/
+
+ /*
     public Object[] compareArrays(Object[] array1, Object[] array2){
 
         for (int i=0; i<array1.length;i++){
@@ -164,8 +163,8 @@ return "";
 
         return myMoves.toString();
     }
-
- */
+//de aqui pa bajo
+ *//*
 public List<Moves> moves(PokemonWrapper pokemonWrapper){
     List<Pokemon> pokemons = pokemonWrapper.getPokemons();
    Pokemon poke = pokemons.get(0);
@@ -195,6 +194,7 @@ public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
    wrapper.setResponse(list);
     return wrapper;
 }
+//de aqui pa rriba
 /*
     public ResponseWrapper pokemonMoves(Pokemon pokemon) {
         ResponseWrapper wrapper = new ResponseWrapper();

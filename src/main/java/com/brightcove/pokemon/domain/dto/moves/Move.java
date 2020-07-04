@@ -1,12 +1,13 @@
-package com.brightcove.pokemon.domain.dto.damageRelations;
+package com.brightcove.pokemon.domain.dto.moves;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HalfDamageForm {
+public class Move {
     private String name;
-    private String url;
-
+   private List<Names> names;
 }

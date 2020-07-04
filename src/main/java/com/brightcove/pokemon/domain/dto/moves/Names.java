@@ -1,11 +1,12 @@
-package com.brightcove.pokemon.domain.dto.pokemon.moves;
+package com.brightcove.pokemon.domain.dto.moves;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Language {
- private String name;
- private String url;
+public class Names {
+    private Name name;
+    private Language language;
+
 }

@@ -1,4 +1,4 @@
-package com.brightcove.pokemon.domain.dto;
+package com.brightcove.pokemon.domain.dto.responses;
 
 import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import lombok.Data;
