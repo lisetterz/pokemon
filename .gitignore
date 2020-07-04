@@ -33,3 +33,4 @@ out/
 
 ### docker ###
 .dockerignore
+.DS_Store
