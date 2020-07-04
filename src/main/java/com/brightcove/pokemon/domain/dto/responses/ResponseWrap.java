@@ -2,7 +2,7 @@ package com.brightcove.pokemon.domain.dto.responses;
 
 import java.util.List;
 
-public class ResponseWrapper {
+public class ResponseWrap {
     private List<ResponseDTO> response;
 
     /**

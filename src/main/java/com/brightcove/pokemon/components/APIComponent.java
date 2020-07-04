@@ -1,8 +1,11 @@
 package com.brightcove.pokemon.components;
 
+import com.brightcove.pokemon.domain.dto.moves.Move;
 import com.brightcove.pokemon.domain.dto.moves.Moves;
+import com.brightcove.pokemon.domain.dto.moves.Name;
+import com.brightcove.pokemon.domain.dto.moves.Names;
 import com.brightcove.pokemon.domain.dto.responses.ResponseDTO;
-import com.brightcove.pokemon.domain.dto.responses.ResponseWrapper;
+import com.brightcove.pokemon.domain.dto.responses.ResponseWrap;
 import com.brightcove.pokemon.domain.dto.Type.Type;
 import com.brightcove.pokemon.domain.dto.Type.DoubleDamageTo;
 import com.brightcove.pokemon.domain.dto.Type.HalfDamageForm;
@@ -12,7 +15,6 @@ import com.brightcove.pokemon.services.APIServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Wrapper;
 import java.util.*;
 
 @Component
@@ -29,6 +31,7 @@ public class APIComponent {
     }
 
     public String getMove(String name){ return service.getMove(name).toString();}
+   // public String getMoves(String name){ return service.getMoves(name).toString();}
 
     /*//mejor no utilizar
 
@@ -60,7 +63,7 @@ private Type pokemonToTypeObj(String name){
     }
 
 /**/
-public String doubleDamage(String name1, String name2){
+public Boolean doubleDamage(String name1, String name2){
     Type pokemon1_type = pokemonToTypeObj(name1);
     // Type type2 = pokemonToTypeObj(name2);
     List<Types> pokemon1_types = pokemonTypes(name1);
@@ -72,21 +75,43 @@ public String doubleDamage(String name1, String name2){
         for(Types dmg2: pokemon2_type) {
             if (dmg.getName().equals(dmg2.getType().getName())) {
                 pokemon2Type = dmg2.getType().getName();
-                return "yes, pokemon " + name1 + " of type " +
-                        pokemon1Type + " deals double damage to pokemon " +
-                        name2 + " of type " +
-                        pokemon2Type;
+                return true;
             }
         }
     }
 
-    return "No, pokemon "+name1+" of type "+
-            pokemon1Type+ " doesn't deals double damage to pokemon "+
-            name2+" of type "+
-            pokemon2Type;
+    return false;
+}
+public String doubleDamageStr(boolean flag, String pokemon1Name, String pokemon2Name){
+    if(flag==true){
+                return "yes, pokemon " + pokemon1Name + " deals double damage to pokemon " +
+                        pokemon2Name ;
+
+    }else  return "No, pokemon "+pokemon1Name+" doesn't deals double damage to pokemon "+ pokemon2Name;
+}
+public String doubleDamageResponse(String name1, String name2){
+    boolean flag = doubleDamage(name1,name2);
+    String message =doubleDamageStr(flag, name1, name2);
+    return message;
+
 }
 
-    public String halfOrNoDamage(String name1, String name2){
+public String halfOrNoDamageResponse(String name1, String name2){
+        boolean flag = halfOrNoDamage(name1,name2);
+        String message =doubleDamageStr(flag, name1, name2);
+        return message;
+
+    }
+    public String halfOrNoDamageStr(boolean flag, String pokemon1Name, String pokemon2Name){
+        if(flag==true){
+            return pokemon1Name+" receives half damage from "+pokemon2Name ;
+
+        }
+        return pokemon1Name+" doesn't receive half or no damage from "+pokemon2Name;
+    }
+
+
+    public Boolean halfOrNoDamage(String name1, String name2){
         Type pokemon1_type = pokemonToTypeObj(name1);
         // Type type2 = pokemonToTypeObj(name2);
         List<Types> pokemon1_types = pokemonTypes(name1);
@@ -99,7 +124,7 @@ public String doubleDamage(String name1, String name2){
             for(Types dmg2: pokemon2_type) {
                 if (dmg.getName().equals(dmg2.getType().getName())) {
                     pokemon2Type = dmg2.getType().getName();
-                    return name1+" receives half damage from "+name2;
+                    return true;
                 }
             }
         }
@@ -107,38 +132,76 @@ public String doubleDamage(String name1, String name2){
             for(Types dmg2: pokemon2_type) {
                 if (dmg.getName().equals(dmg2.getType().getName())) {
                     pokemon2Type = dmg2.getType().getName();
-                    return name1+" receives no damage from "+name2;
+                    return true;
                 }
             }
         }
 
-        return name1+" doesn't receive half or no damage from "+name2;
+        return false;
     }
 
 
 //returns result wrapped
+    public Move getMoveObj(String name){
+        Move move= service.getMove(name);
+        return move;
+    }
+    public String moveLanguage(List<String> message){
+    List<Move> moveList = new ArrayList<>();
+    List<List<Names>> namesList = new ArrayList<>();
+        List<Names> namesList2 = new ArrayList<>();
+        List<Name> nameList = new ArrayList<>();
+        for(String move: message){
+            moveList.add(getMoveObj(move));
+        }
+        for(Move a: moveList){
+            namesList.add(a.getNames());
+
+;        }
+        int count =0;
+        for(List<Names> n :namesList){
+            if(n.get(count).getLanguage().equals("es")){
+                nameList.add(n.get(count).getName());
+            }
+        }
+    return nameList.toString();
+    }
     //este es el bueno
-    /*
-    public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
+public Pokemon getPokemonObj(String name){
+    Pokemon pokemon= service.getPokemon(name);
+    return pokemon;
+}
+    public ResponseWrap pokemonMoves(PokemonWrapper pokemonWrapper) {
         List<Pokemon> pokemons = pokemonWrapper.getPokemons();
         List<List<String>> lists = new LinkedList<>();
-        for (Pokemon pokemon : pokemons) {
+        for (Pokemon pokeWrapp : pokemons) {
+            Pokemon pokemon = getPokemonObj(pokeWrapp.getName());
             List<Moves> movesList = pokemon.getMoves();
             List<String> myList = new LinkedList<>();
+            int count=0;
             for (Moves moves : movesList) {
-                myList.add(movesList.get(0).getMove().getName());
+                myList.add(movesList.get(count).getMove().getName());
+                count++;
             }
         lists.add(myList);
         }
         //it will return a list of the duplicated moves List<String>
-        String message = getSameMoves(lists,null, new ArrayList<>()).toString();
-        ResponseWrapper responseWrapper = new ResponseWrapper();
+        List<String> message = getSameMoves(lists,null, new ArrayList<>());
+       // String messageStr = moveLanguage(message);
+        String messageStr =message.toString();
+
+       //wrap response
+        ResponseWrap responseWrap = new ResponseWrap();
         ResponseDTO response = new ResponseDTO();
-        response.setMessage(message);
+        response.setMessage(messageStr);
         List<ResponseDTO> listResponse = new ArrayList<>();
         listResponse.add(response);
-        responseWrapper.setResponse(listResponse);
-        return responseWrapper;
+        responseWrap.setResponse(listResponse);
+        return responseWrap;
+    }
+    public String callMoves(List<String> list){
+
+        return "";
     }
     //aqui termina el bueno*/
     /*
@@ -194,62 +257,17 @@ public void comparison(){
         return getSameMoves(lists,list2,current);
 
     }
- /*
-    public Object[] compareArrays(Object[] array1, Object[] array2){
 
-        for (int i=0; i<array1.length;i++){
-            for(int j=0; j<array2.length;j++){
-             //   if((array1.getName())
-            }
-        }
-        return null;
-    }
-    /*
 
-public String sameMoves(String[] pokemons){
-        Pokemon pokemon;
-        Moves[] moves;
-  //  HashMap<Moves> sameMoves = new HashMap<>();
-        for(int i=0; i<pokemons.length;i++){
-            pokemon = service.getPokemon(pokemons[i]);
-            moves = pokemon.getMoves();
-            for(int j = i ;i<moves.length;j++){
-
-            }
-        }
-return "";
-}
-*/
-/*
-    public String sameMoves(String[] pokemons) {
-          int size = pokemons.length;
-          String [][] matrix= new String[size][];
-         // HashMap<Pokemon,Hashtable<Moves, Move>> hm = new HashMap<>();
-          HashMap<Pokemon, Moves[]> myMoves = new HashMap<>();
-        for(int i=0; i<size;i++){
-           Pokemon pokemon = service.getPokemon(pokemons[i]);
-           Moves[] moves = pokemon.getMoves();
-           for(int j=0; j<moves.length;j++){
-               myMoves.put(pokemon,moves);
-           }
-        }
-
-        return myMoves.toString();
-    }
 //de aqui pa bajo
- *//*
+ /*
 public List<Moves> moves(PokemonWrapper pokemonWrapper){
     List<Pokemon> pokemons = pokemonWrapper.getPokemons();
    Pokemon poke = pokemons.get(0);
   // List<Moves> moves = poke.getMoves();
     return poke.getMoves();
 }
-public ResponseDTO addPokemon(Pokemon pokemon){
-    ResponseDTO response = new ResponseDTO();
-    response.setName(pokemon.getName());
-    response.setMessage("saved");
-    return response;
-}
+
 public void getMoves(){
 
 }

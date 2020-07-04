@@ -2,6 +2,7 @@ package com.brightcove.pokemon.services;
 
 import com.brightcove.pokemon.config.RestTemplateConfig;
 import com.brightcove.pokemon.domain.dto.moves.Move;
+import com.brightcove.pokemon.domain.dto.moves.Moves;
 import com.brightcove.pokemon.domain.dto.pokemon.Pokemon;
 import com.brightcove.pokemon.domain.dto.Type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,18 @@ public class APIServiceImpl implements APIService{
     }
 
     @Override
-    public Move getMove(String name) {
+    public com.brightcove.pokemon.domain.dto.moves.Move getMove(String name) {
         RestTemplate client = config.createRestTemplate();
 
-        ResponseEntity<Move> response = client.exchange("https://pokeapi.co/api/v2/move/" + name, HttpMethod.GET,config.createHeaders(),Move.class);
+        ResponseEntity<com.brightcove.pokemon.domain.dto.moves.Move> response = client.exchange("https://pokeapi.co/api/v2/move/" + name, HttpMethod.GET,config.createHeaders(),com.brightcove.pokemon.domain.dto.moves.Move.class);
         return response.getBody();
     }
+/*
+    @Override
+    public com.brightcove.pokemon.domain.dto.moves.Moves getMoves(String name) {
+        RestTemplate client = config.createRestTemplate();
+
+        ResponseEntity<Moves> response = client.exchange("https://pokeapi.co/api/v2/move/" + name, HttpMethod.GET,config.createHeaders(),Moves.class);
+        return response.getBody();
+    }*/
 }

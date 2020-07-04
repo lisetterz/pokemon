@@ -6,7 +6,7 @@ public class MovesWrapper {
     private List<Moves> moves;
 
     /**
-     * @return the persons
+     * @return the pokemons
      */
     public List<Moves> getMoves() {
         return moves;
