@@ -1,0 +1,9 @@
+{
+	"pokemons": [{
+		"name": "pikachu"
+	}, {
+		"name": "meowth"
+    }, {
+        "name": "pikachu"
+	}]
+}
