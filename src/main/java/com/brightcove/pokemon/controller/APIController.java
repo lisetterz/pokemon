@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class APIController {
     @Autowired
     APIComponent component;
-
+//Methods not for common user
     @RequestMapping("/")
     public String home() {
         return "Hello Docker World";

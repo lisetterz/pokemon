@@ -1,5 +1,7 @@
 package com.brightcove.pokemon.components;
 
+import com.brightcove.pokemon.domain.dto.moves.Moves;
+import com.brightcove.pokemon.domain.dto.responses.ResponseDTO;
 import com.brightcove.pokemon.domain.dto.responses.ResponseWrapper;
 import com.brightcove.pokemon.domain.dto.Type.Type;
 import com.brightcove.pokemon.domain.dto.Type.DoubleDamageTo;
@@ -10,6 +12,7 @@ import com.brightcove.pokemon.services.APIServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Wrapper;
 import java.util.*;
 
 @Component
@@ -115,12 +118,79 @@ public String doubleDamage(String name1, String name2){
 
 //returns result wrapped
     public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
-    ResponseWrapper responseWrapper = new ResponseWrapper();
-    return responseWrapper;
+        List<Pokemon> pokemons = pokemonWrapper.getPokemons();
+        List<List<String>> lists = new LinkedList<>();
+        for (Pokemon pokemon : pokemons) {
+            List<Moves> movesList = pokemon.getMoves();
+            List<String> myList = new LinkedList<>();
+            for (Moves moves : movesList) {
+                myList.add(movesList.get(0).getMove().getName());
+            }
+        lists.add(myList);
+        }
+        //it will return a list of the duplicated moves List<String>
+        String message = getSameMoves(lists,null, new ArrayList<>()).toString();
+        ResponseWrapper responseWrapper = new ResponseWrapper();
+        ResponseDTO response = new ResponseDTO();
+        response.setMessage(message);
+        List<ResponseDTO> listResponse = new ArrayList<>();
+        listResponse.add(response);
+        responseWrapper.setResponse(listResponse);
+        return responseWrapper;
+    }
+    /*
+    public Wrapper wrapObject(Wrapper wrapper){
+    return null;
     }
     /*
 */
+    /*
+public void comparison(){
+   // List<String> list1 = new ArrayList<>();
 
+    LinkedList<List<String>> myList = new LinkedList<>();
+
+    List<String> duplicated = getSameMoves(myList,null, new ArrayList<>());
+    System.out.println(duplicated.toString());
+}
+
+    private List<String> compareEquals(List<String> lista1, List<String> lista2) {
+       List<String> duplicates = new ArrayList<>();
+        for(String a: lista1){
+            for(String b: lista2){
+                if(a.equals(b)){
+                    duplicates.add(a);
+                }
+            }
+        }
+    return duplicates;
+    }
+*/
+    public List<String> getSameMoves(List<List<String>> lists, List<String> list1 ,List<String> current){
+        if(lists.isEmpty()) {
+            return current;
+        }
+        if(lists.size()==1) {
+            return current;
+        }
+        if(list1==null) {
+            list1 = lists.get(0);
+        }
+        List<String> list2 = lists.get(1);
+        for(String name: list1) {
+            if(list2.contains(name)) {
+                if(!current.contains(name)) {
+                    current.add(name);
+                }
+            }
+
+        }
+
+        lists.remove(0);
+
+        return getSameMoves(lists,list2,current);
+
+    }
  /*
     public Object[] compareArrays(Object[] array1, Object[] array2){
 
