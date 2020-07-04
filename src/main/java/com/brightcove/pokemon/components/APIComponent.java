@@ -31,11 +31,10 @@ public class APIComponent {
     }
 
     public String getMove(String name){ return service.getMove(name).toString();}
-   // public String getMoves(String name){ return service.getMoves(name).toString();}
 
-    /*//mejor no utilizar
-
-     *//*
+   /* public String getMoves(String name){ return service.getMoves(name).toString();}
+*/
+   /*
     public String getMoves(String pokemonName){
 
         return service.getPokemon(pokemonName).getMoves().toString();}
@@ -62,7 +61,6 @@ private Type pokemonToTypeObj(String name){
         return service.getPokemon(name).getTypes();
     }
 
-/**/
 public Boolean doubleDamage(String name1, String name2){
     Type pokemon1_type = pokemonToTypeObj(name1);
     // Type type2 = pokemonToTypeObj(name2);
