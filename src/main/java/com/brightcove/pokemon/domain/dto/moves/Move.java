@@ -10,4 +10,9 @@ import java.util.List;
 public class Move {
     private String name;
    private List<Names> names;
+    @Override
+    public String toString() {
+        return String.format(name);
+    }
 }
+

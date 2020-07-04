@@ -44,11 +44,11 @@ public class APIController {
     public String getHalfOrNoDamage(@PathVariable String pokemon1, @PathVariable String pokemon2){
         return component.halfOrNoDamage(pokemon1,pokemon2);
     }
-
+/*
     @PostMapping(value = "/pokemonMoves", consumes = "application/json", produces = "application/json")
     public ResponseWrapper getPokemonMoves(@RequestBody PokemonWrapper pokemonWrapper) {
         return component.pokemonMoves(pokemonWrapper);
-    }
+    }*/
 /*
     @PostMapping(
             value = "/pokemonMoves", consumes = "application/json", produces = "application/json")

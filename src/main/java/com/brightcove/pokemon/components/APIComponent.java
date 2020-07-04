@@ -117,6 +117,8 @@ public String doubleDamage(String name1, String name2){
 
 
 //returns result wrapped
+    //este es el bueno
+    /*
     public ResponseWrapper pokemonMoves(PokemonWrapper pokemonWrapper) {
         List<Pokemon> pokemons = pokemonWrapper.getPokemons();
         List<List<String>> lists = new LinkedList<>();
@@ -138,6 +140,7 @@ public String doubleDamage(String name1, String name2){
         responseWrapper.setResponse(listResponse);
         return responseWrapper;
     }
+    //aqui termina el bueno*/
     /*
     public Wrapper wrapObject(Wrapper wrapper){
     return null;
